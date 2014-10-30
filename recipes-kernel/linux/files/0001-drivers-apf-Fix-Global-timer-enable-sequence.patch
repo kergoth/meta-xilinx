@@ -1,0 +1,34 @@
+From fefb7a3184d673e1d116fe52750a0661b6fd928e Mon Sep 17 00:00:00 2001
+From: Radhey Shyam Pandey <radheys@xilinx.com>
+Date: Fri, 24 Oct 2014 22:35:02 +0530
+Subject: [LINUX PATCH] drivers: apf: Fix Global timer enable sequence.
+
+Use read-modify-write to enable GT.
+This patch fixes kernel freeze in non-smp
+configuration.
+
+Signed-off-by: Radhey Shyam Pandey <radheys@xilinx.com>
+---
+ drivers/staging/apf/xlnk.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/drivers/staging/apf/xlnk.c b/drivers/staging/apf/xlnk.c
+index 5fbeebc..57ab656ec 100644
+--- a/drivers/staging/apf/xlnk.c
++++ b/drivers/staging/apf/xlnk.c
+@@ -1161,9 +1161,11 @@ static const unsigned long bc_data_offset;
+ 
+ static void xlnk_start_benchmark_counter(void)
+ {
++	u32 reg = 0;
+ 	bc_virt = ioremap(bc_phyaddr, bc_csr_size);
+ 	if (bc_virt) {
+-		iowrite32(bc_ctr_start, bc_virt + bc_ctr_offset);
++		reg = ioread32(bc_virt + bc_ctr_offset);
++		iowrite32(reg | bc_ctr_start, bc_virt + bc_ctr_offset);
+ 		pr_info("xlnk: benchmark counter started\n");
+ 		/* iounmap(bc_virt); */
+ 	}
+-- 
+1.7.7.4
+

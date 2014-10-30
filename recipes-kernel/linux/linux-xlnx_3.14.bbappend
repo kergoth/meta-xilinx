@@ -3,6 +3,7 @@ SRC_URI_append = " \
     file://xilinx_zynq_base_trd.cfg \
     file://openamp.cfg \
     file://0001-openamp-integrate-OpenAMP-support.patch \
+    file://0001-drivers-apf-Fix-Global-timer-enable-sequence.patch \
 "
 
 # The latest kernel in meta-xilinx is missing critical graphic driver commits,
