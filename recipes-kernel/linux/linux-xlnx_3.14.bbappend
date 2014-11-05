@@ -1,7 +1,9 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
+
 SRC_URI_append = " \
     file://xilinx_zynq_base_trd.cfg \
     file://openamp.cfg \
+    file://lttng.cfg \
     file://0001-openamp-integrate-OpenAMP-support.patch \
     file://0001-drivers-apf-Fix-Global-timer-enable-sequence.patch \
 "
