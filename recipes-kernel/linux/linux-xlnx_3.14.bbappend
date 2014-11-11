@@ -6,6 +6,10 @@ SRC_URI_append = " \
     file://lttng.cfg \
     file://0001-openamp-integrate-OpenAMP-support.patch \
     file://0001-drivers-apf-Fix-Global-timer-enable-sequence.patch \
+    file://unionfs-2.6_for_3.14.17.patch \    
+    file://enable_quota.cfg \
+    file://enable_squashfs.cfg \
+    file://enable_unionfs.cfg \
 "
 
 # The latest kernel in meta-xilinx is missing critical graphic driver commits,
