@@ -74,7 +74,7 @@ Usage: `basename $1` --device=<sd-card-device> <options> [ files for boot partit
   -b|--devicetree [dtb]     Which device tree blob would you like to install?
                             [ default: uImage-zynq-zc702-minimal.dtb ]
 
-  -m|--machine [machine]    Which device tree blob would you like to install?
+  -m|--machine [machine]    What machine are you building?
                             [ default: zynq-zc702-mel ]
 
   -f|--fsbl [image]         Which bootloader would you like to use?
@@ -145,7 +145,7 @@ while [ $# -gt 0 ] ; do
           exit 1
           ;;
 
-      -d|--machine)
+      -m|--machine)
           if  [ "$2" ]; then
               case $2 in
                   -* )
@@ -252,7 +252,7 @@ while [ $# -gt 0 ] ; do
                       exit 1
                       ;;
                   *)
-                      devicetree=$2
+                      KERNEL_DEVICETREE=$2
                       shift 2
                       ;;
               esac
@@ -262,7 +262,7 @@ while [ $# -gt 0 ] ; do
           fi
           ;;
       --devicetree=?*)
-          devicetree=${1#*=}
+          KERNEL_DEVICETREE=${1#*=}
           shift
           ;;
       --devicetree=)
@@ -458,6 +458,14 @@ if [ ! -b ${PARTITION1} ]; then
             PARTITION2=${device}p2
         fi
 fi
+
+# Sometimes a fuse-based automounter will automatically mount the devices,
+# ensure nothing is mounted before we try to make a new filesystem on the
+# partitions.
+for i in $device*; do
+   echo "unmounting device '$i'"
+   umount $i 2>/dev/null
+done
 
 # make partitions.
 echo "Formating ${PARTITION1} (boot) ..."

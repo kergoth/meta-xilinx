@@ -3,7 +3,6 @@ SRC_URI_append += " \
     file://ps7_init.h \
     file://ps7_init.c \
     file://uEnv.txt \
-    file://mel-boot.bin \
 "
 
 do_configure_prepend () {
@@ -20,8 +19,5 @@ do_deploy_append () {
 	fi
 	if [ -e ${WORKDIR}/git/boot.bin ]; then
 		cp ${WORKDIR}/git/boot.bin ${DEPLOYDIR}
-	fi
-	if [ -e ${WORKDIR}/mel-boot.bin ]; then
-		cp ${WORKDIR}/mel-boot.bin ${DEPLOYDIR}
 	fi
 }
