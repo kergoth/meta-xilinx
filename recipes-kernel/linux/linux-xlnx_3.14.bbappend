@@ -1,7 +1,7 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
 
 SRC_URI_append = " \
-    file://xilinx_zynq_base_trd.cfg \
+    ${@base_contains("MACHINE_FEATURES", "hdmi", "file://xilinx_zynq_base_trd.cfg", "", d)} \
     file://openamp.cfg \
     file://lttng.cfg \
     file://0001-openamp-integrate-OpenAMP-support.patch \
