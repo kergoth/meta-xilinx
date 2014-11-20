@@ -25,7 +25,7 @@ VERSION="1.0"
 
 : ${MACHINE:="zc702-zynq7-mel"}
 : ${ROOTFS_IMAGE:="${rootfs}-${MACHINE}.tar.gz"}
-: ${KERNEL_DEVICETREE:="uImage-zynq-zc702.dtb"}
+: ${KERNEL_DEVICETREE:="uImage-zynq-zc702-mel.dtb"}
 : ${kernel:="uImage"}
 : ${rootfs:="core-image-minimal"}
 : ${sdkdir:="`pwd`/tmp/deploy/images/${MACHINE}"}
@@ -66,16 +66,16 @@ Usage: `basename $1` --device=<sd-card-device> <options> [ files for boot partit
                             [ default: `pwd`/tmp/deploy/images/${MACHINE} ]
 
   -r|--rootfs [rootfs]      Which rootfs would you like to install?
-                            [ default: core-image-minimal ]
+                            [ default: ${rootfs} ]
 
   -k|--kernel [kernel]      Which kernel would you like to install?
                             [ default: uImage ]
 
   -b|--devicetree [dtb]     Which device tree blob would you like to install?
-                            [ default: uImage-zynq-zc702.dtb ]
+                            [ default: ${KERNEL_DEVICETREE} ]
 
   -m|--machine [machine]    What machine are you building?
-                            [ default: zynq-zc702-mel ]
+                            [ default: ${MACHINE} ]
 
   -f|--fsbl [image]         Which bootloader would you like to use?
                             Options: boot.bin mel-boot.bin
@@ -500,6 +500,7 @@ done
 
 echo "Extracting filesystem [${ROOTFS_IMAGE}] on ${PARTITION2} ..."
 execute "tar -zvxf ${sdkdir}/${ROOTFS_IMAGE} -C ${zc702_scratch}/rootfs"
+execute "tar -zvxf ${sdkdir}/modules-${MACHINE}.tgz -C ${zc702_scratch}/rootfs"
 
 for i in $device*; do
    echo "unmounting device '$i'"
