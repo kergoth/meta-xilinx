@@ -1176,7 +1176,7 @@ index 0000000..ddc096b
 +	struct device mid_dev;
 +};
 +
-+#ifndef CONFIG_SMP
++#if defined(CONFIG_OPENAMP)
 +extern int set_ipi_handler(int ipinr, void *handler, char *desc);
 +
 +extern void clear_ipi_handler(int ipinr);
