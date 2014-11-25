@@ -1,8 +1,15 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
+
 SRC_URI_append = " \
-    file://xilinx_zynq_base_trd.cfg \
+    ${@base_contains("MACHINE_FEATURES", "hdmi", "file://xilinx_zynq_base_trd.cfg", "", d)} \
     file://openamp.cfg \
+    file://lttng.cfg \
     file://0001-openamp-integrate-OpenAMP-support.patch \
+    file://0001-drivers-apf-Fix-Global-timer-enable-sequence.patch \
+    file://unionfs-2.6_for_3.14.17.patch \    
+    file://enable_quota.cfg \
+    file://enable_squashfs.cfg \
+    file://enable_unionfs.cfg \
 "
 
 # The latest kernel in meta-xilinx is missing critical graphic driver commits,
