@@ -14,7 +14,7 @@
 
 /dts-v1/;
 
-#include "zynq-rpmsg.dtsi"
+/include/ "zynq-rpmsg.dtsi"
 
 / {
 	#address-cells = <1>;
