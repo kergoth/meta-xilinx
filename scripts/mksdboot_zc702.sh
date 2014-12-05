@@ -25,7 +25,7 @@ VERSION="1.0"
 
 : ${MACHINE:="zc702-zynq7-mel"}
 : ${ROOTFS_IMAGE:="${rootfs}-${MACHINE}.tar.gz"}
-: ${KERNEL_DEVICETREE:="zynq-zc702-mel.dtb"}
+: ${KERNEL_DEVICETREE:="${MACHINE}.dtb"}
 : ${kernel:="uImage"}
 : ${rootfs:="core-image-minimal"}
 : ${sdkdir:="`pwd`/tmp/deploy/images/${MACHINE}"}
