@@ -8,6 +8,7 @@ SRC_URI_append = " \
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
     file://enable_unionfs.cfg \
+    file://enable_fhandle.cfg \
 "
 
 SRCREV = "c0292a5c3919cf777f9d21202e022c99ce255b8f"
