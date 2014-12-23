@@ -497,7 +497,7 @@ execute "cp -v ${sdkdir}/${kernel} ${zc702_scratch}/boot/"
 execute "cp -v ${sdkdir}/${KERNEL_DEVICETREE} ${zc702_scratch}/boot/"
 execute "cp -v ${sdkdir}/${fsbl} ${zc702_scratch}/boot/boot.bin"
 if [ ${fsbl_standalone} -ne 1 ] ; then
-    execute "cp -v ${sdkdir}/u-boot.bin ${zc702_scratch}/boot/u-boot.img"
+    execute "cp -v ${sdkdir}/u-boot.img ${zc702_scratch}/boot/"
 fi
 for i in $copy ; do
    execute "cp -v $copy ${zc702_scratch}/boot/"
