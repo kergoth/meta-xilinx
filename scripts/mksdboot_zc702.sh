@@ -387,6 +387,11 @@ if [ -z "${KERNEL_DEVICETREE}" -o ! -f "${sdkdir}/${KERNEL_DEVICETREE}" ]; then
     exit 1;
 fi
 
+# Pre-built image doesn't have machine name appended 
+if [ ! -f $sdkdir/${ROOTFS_IMAGE} ]; then
+    ROOTFS_IMAGE=`echo $ROOTFS_IMAGE | sed "s:-${MACHINE}::"`
+fi
+
 if [ -z "${ROOTFS_IMAGE}" -o ! -f "${sdkdir}/${ROOTFS_IMAGE}" ]; then
     echo "ERROR: ${ROOTFS_IMAGE} does not exist or is not a regular file:"
     echo "       [${sdkdir}/${ROOTFS_IMAGE}]"
