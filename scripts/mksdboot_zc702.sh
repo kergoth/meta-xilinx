@@ -345,7 +345,7 @@ fi
 MKFS_VFAT=`which mkfs.vfat`
 MKFS_EXT3=`which mkfs.ext3`
 FDISK=`which fdisk`
-
+MODULES=modules-${MACHINE}.tgz
 # Ensure we have all the resources necessary before proceeding.
 
 # Check our host dependencies
@@ -392,9 +392,19 @@ if [ ! -f $sdkdir/${ROOTFS_IMAGE} ]; then
     ROOTFS_IMAGE=`echo $ROOTFS_IMAGE | sed "s:-${MACHINE}::"`
 fi
 
+if [ ! -f $sdkdir/${MODULES} ]; then
+    MODULES=`echo $MODULES | sed "s:-${MACHINE}::"`	
+fi
+
 if [ -z "${ROOTFS_IMAGE}" -o ! -f "${sdkdir}/${ROOTFS_IMAGE}" ]; then
     echo "ERROR: ${ROOTFS_IMAGE} does not exist or is not a regular file:"
     echo "       [${sdkdir}/${ROOTFS_IMAGE}]"
+    exit 1;
+fi
+
+if [ ! -f $sdkdir/${MODULES} ]; then
+    echo "ERROR: ${MODULES} does not exist or is not a regular file:"
+    echo "       [${sdkdir}/${MODULES}]"
     exit 1;
 fi
 
@@ -505,7 +515,7 @@ done
 
 echo "Extracting filesystem [${ROOTFS_IMAGE}] on ${PARTITION2} ..."
 execute "tar -zvxf ${sdkdir}/${ROOTFS_IMAGE} -C ${zc702_scratch}/rootfs"
-execute "tar -zvxf ${sdkdir}/modules-${MACHINE}.tgz -C ${zc702_scratch}/rootfs"
+execute "tar -zvxf ${sdkdir}/${MODULES} -C ${zc702_scratch}/rootfs"
 
 for i in $device*; do
    echo "unmounting device '$i'"
