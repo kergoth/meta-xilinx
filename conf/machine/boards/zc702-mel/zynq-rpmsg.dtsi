@@ -17,12 +17,10 @@
                 test: remoteproc-test@0 {
                          compatible = "xlnx,zynq_remoteproc";
                          reg = < 0x0 0x10000000 >;
-                         interrupt-parent = <&ps7_scugic_0>;
-                         interrupts = < 0x0 0x25 0x4 0x0 0x26 0x4 >;
                          firmware = "firmware";
-                         ipino = <0x6>;
-                         vring0 = <0x2>;
-                         vring1 = <0x3>;
+                         ipino = <0xe>;
+                         vring0 = <0xe>;
+                         vring1 = <0xf>;
                       } ;
         };
 };
