@@ -1,4 +1,4 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files/${MACHINE}:"
 SRC_URI_append += " \
     file://ps7_init.h \
     file://ps7_init.c \
