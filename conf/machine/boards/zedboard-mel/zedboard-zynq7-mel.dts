@@ -132,12 +132,11 @@
 			xlnx,has-mdio = <0x1>;
 			xlnx,ptp-enet-clock = <111111115>;
 			mdio {
-				#address-cells = <1>;
-				#size-cells = <0>;
-				phy0: phy@7 {
-					compatible = "marvell,88e1116r";
+				phy0: phy@0 {
+					compatible = "marvell,88e1518", "marvell,88e1510";
 					device_type = "ethernet-phy";
-					reg = <7>;
+					reg = <0>;
+					marvell,reg-init = <3 16 0xff00 0x1e 3 17 0xfff0 0x0a>;
 				} ;
 			} ;
 		} ;
