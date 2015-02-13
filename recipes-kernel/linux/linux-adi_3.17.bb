@@ -22,6 +22,7 @@ SRC_URI = " \
            git://github.com/analogdevicesinc/linux.git;protocol=https;branch=${KBRANCH};name=linux-adi \
            file://zedboard-zynq7-adi-hdmi.cfg \
            file://lttng.cfg \
+           file://enable_nfs_client_support.cfg \
           "
 
 LINUX_VERSION ?= "3.17+"
