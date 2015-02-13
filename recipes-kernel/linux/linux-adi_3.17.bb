@@ -27,6 +27,8 @@ SRC_URI = " \
            file://enable_squashfs.cfg \
            file://unionfs-2.6_for_3.17.0-rc1.patch \
            file://enable_unionfs.cfg \
+           file://enable_kgboc.cfg \
+           file://drivers-tty-serial-Makefile-Link-kgdoc-after-the-UART.patch \
           "
 
 LINUX_VERSION ?= "3.17+"
