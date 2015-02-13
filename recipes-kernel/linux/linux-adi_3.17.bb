@@ -24,6 +24,7 @@ SRC_URI = " \
            file://lttng.cfg \
            file://enable_nfs_client_support.cfg \
            file://enable_quota.cfg \
+           file://enable_squashfs.cfg \
           "
 
 LINUX_VERSION ?= "3.17+"
