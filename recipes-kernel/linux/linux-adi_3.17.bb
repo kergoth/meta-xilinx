@@ -8,7 +8,7 @@
 #
 # PREFERRED_PROVIDER_virtual/kernel = "linux-adi"
 #
-
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
 inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
@@ -21,6 +21,14 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/config:"
 SRC_URI = " \
            git://github.com/analogdevicesinc/linux.git;protocol=https;branch=${KBRANCH};name=linux-adi \
            file://zedboard-zynq7-adi-hdmi.cfg \
+           file://lttng.cfg \
+           file://enable_nfs_client_support.cfg \
+           file://enable_quota.cfg \
+           file://enable_squashfs.cfg \
+           file://unionfs-2.6_for_3.17.0-rc1.patch \
+           file://enable_unionfs.cfg \
+           file://enable_kgboc.cfg \
+           file://drivers-tty-serial-Makefile-Link-kgdoc-after-the-UART.patch \
           "
 
 LINUX_VERSION ?= "3.17+"
