@@ -23,12 +23,8 @@
 
 VERSION="1.0"
 
-: ${MACHINE:="zc702-zynq7-mel"}
-: ${ROOTFS_IMAGE:="${rootfs}-${MACHINE}.tar.gz"}
-: ${KERNEL_DEVICETREE:="${MACHINE}.dtb"}
 : ${kernel:="uImage"}
-: ${rootfs:="core-image-minimal"}
-: ${sdkdir:="`pwd`/tmp/deploy/images/${MACHINE}"}
+: ${rootfs:="console-image"}
 : ${fsbl:="boot.bin"}
 fsbl_standalone=0
 unset copy
@@ -63,7 +59,6 @@ Usage: `basename $1` --device=<sd-card-device> <options> [ files for boot partit
                             [ default: NONE ]
 
   -s|--sdk [sdk_dir]        Where is sdk installed?
-                            [ default: `pwd`/tmp/deploy/images/${MACHINE} ]
 
   -r|--rootfs [rootfs]      Which rootfs would you like to install?
                             [ default: ${rootfs} ]
@@ -72,10 +67,9 @@ Usage: `basename $1` --device=<sd-card-device> <options> [ files for boot partit
                             [ default: uImage ]
 
   -b|--devicetree [dtb]     Which device tree blob would you like to install?
-                            [ default: ${KERNEL_DEVICETREE} ]
 
   -m|--machine [machine]    What machine are you building?
-                            [ default: ${MACHINE} ]
+                            Options: zc702-zynq7-mel zc702-zynq7-mel-remote zedboard-zynq7-mel zedboard-zynq7-mel-remote
 
   -f|--fsbl [image]         Which bootloader would you like to use?
                             Options: boot.bin mel-boot.bin
@@ -339,9 +333,23 @@ while [ $# -gt 0 ] ; do
   esac
 done
 
+if [ -z "${MACHINE}" ]; then
+    echo "ERROR: Please specify a valid machine"
+    exit 1;
+fi
+
 if [ -n "${rootfs}" ] ; then
     ROOTFS_IMAGE="${rootfs}-${MACHINE}.tar.gz"
 fi
+
+if [ -z "${KERNEL_DEVICETREE}" ]; then
+    KERNEL_DEVICETREE="${MACHINE}.dtb"
+fi
+
+if [ -z "${sdkdir}" ]; then
+    sdkdir=`pwd`/tmp/deploy/images/${MACHINE}
+fi
+
 MKFS_VFAT=`which mkfs.vfat`
 MKFS_EXT3=`which mkfs.ext3`
 FDISK=`which fdisk`
