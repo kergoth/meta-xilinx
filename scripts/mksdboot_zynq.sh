@@ -74,6 +74,8 @@ Usage: `basename $1` --device=<sd-card-device> <options> [ files for boot partit
   -f|--fsbl [image]         Which bootloader would you like to use?
                             Options: boot.bin mel-boot.bin
                             [ default: boot.bin ]
+  -R|--remote [remote_fw]   Absolute or relative path to remote firmware booted by MEL in MEMF configuration
+  -M|--master [master_fw]   Absolute or relative path to master firmware to boot MEL in MEMF configuration
 
   --version                 Print version.
   --help                    Print this help message.
@@ -318,6 +320,60 @@ while [ $# -gt 0 ] ; do
           exit 1
           ;;
 
+      -R|--remote)
+          if  [ "$2" ]; then
+              case $2 in
+                  -* )
+                      # another option appears to follow, not a parameter
+                      echo "ERROR: remote firmware must not be empty" >&2
+                      exit 1
+                      ;;
+                  *)
+                      remote=$2
+                      shift 2
+                      ;;
+              esac
+          else
+              echo "ERROR: remote firmware must not be empty" >&2
+              exit 1
+          fi
+          ;;
+      --remote=?*)
+          remote=${1#*=}
+          shift
+          ;;
+      --remote=)
+          echo "ERROR: remote firmware must not be empty" >&2
+          exit 1
+          ;;
+
+      -M|--master)
+          if  [ "$2" ]; then
+              case $2 in
+                  -* )
+                      # another option appears to follow, not a parameter
+                      echo "ERROR: master firmware must not be empty" >&2
+                      exit 1
+                      ;;
+                  *)
+                      master=$2
+                      shift 2
+                      ;;
+              esac
+          else
+              echo "ERROR: master firmware must not be empty" >&2
+              exit 1
+          fi
+          ;;
+      --master=?*)
+          master=${1#*=}
+          shift
+          ;;
+      --master=)
+          echo "ERROR: master firmware must not be empty" >&2
+          exit 1
+          ;;
+
       --)
           shift
           break
@@ -392,6 +448,16 @@ fi
 if [ -z "${KERNEL_DEVICETREE}" -o ! -f "${sdkdir}/${KERNEL_DEVICETREE}" ]; then
     echo "ERROR: ${KERNEL_DEVICETREE} does not exist or is not a regular file:"
     echo "       [${sdkdir}/${KERNEL_DEVICETREE}]"
+    exit 1;
+fi
+
+if [ -n "${remote}" -a ! -f "${remote}" ]; then
+    echo "ERROR: remote firmware ${remote} does not exist or is not a regular file"
+    exit 1;
+fi
+
+if [ -n "${master}" -a ! -f "${master}" ]; then
+    echo "ERROR: master firmware ${master} does not exist or is not a regular file"
     exit 1;
 fi
 
@@ -511,19 +577,32 @@ execute "mkdir -p ${zc702_scratch}/boot"
 execute "mkdir -p ${zc702_scratch}/rootfs"
 execute "mount ${PARTITION1} ${zc702_scratch}/boot"
 execute "mount ${PARTITION2} ${zc702_scratch}/rootfs"
-execute "cp -v ${sdkdir}/${kernel} ${zc702_scratch}/boot/"
-execute "cp -v ${sdkdir}/${KERNEL_DEVICETREE} ${zc702_scratch}/boot/"
-execute "cp -v ${sdkdir}/${fsbl} ${zc702_scratch}/boot/boot.bin"
-if [ ${fsbl_standalone} -ne 1 ] ; then
-    execute "cp -v ${sdkdir}/u-boot.img ${zc702_scratch}/boot/"
+# if MEL is acting as MEMF remote, boot partition would only contain master firmware
+if [ -n "${master}" ] ; then 
+    echo "Installing MEMF master firmware on filesystem"
+    execute "cp -v ${master} ${zc702_scratch}/boot"
+else
+    execute "cp -v ${sdkdir}/${kernel} ${zc702_scratch}/boot/"
+    execute "cp -v ${sdkdir}/${KERNEL_DEVICETREE} ${zc702_scratch}/boot/"
+    for i in $copy ; do
+        execute "cp -v $copy ${zc702_scratch}/boot/"
+    done
 fi
-for i in $copy ; do
-   execute "cp -v $copy ${zc702_scratch}/boot/"
-done
+
+execute "cp -v ${sdkdir}/${fsbl} ${zc702_scratch}/boot/boot.bin"
+
+if [ ${fsbl_standalone} -ne 1 ] ; then
+        execute "cp -v ${sdkdir}/u-boot.img ${zc702_scratch}/boot/"
+    fi
 
 echo "Extracting filesystem [${ROOTFS_IMAGE}] on ${PARTITION2} ..."
 execute "tar -zvxf ${sdkdir}/${ROOTFS_IMAGE} -C ${zc702_scratch}/rootfs"
 execute "tar -zvxf ${sdkdir}/${MODULES} -C ${zc702_scratch}/rootfs"
+
+if [ -n "${remote}" ] ; then
+    echo "Installing MEMF remote firmware on filesystem"
+    execute "install -vD ${remote} ${zc702_scratch}/rootfs/lib/firmware/firmware"
+fi
 
 for i in $device*; do
    echo "unmounting device '$i'"
