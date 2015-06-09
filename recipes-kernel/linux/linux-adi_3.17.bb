@@ -39,10 +39,5 @@ SRCREV_zynq="845d349f6e18ca34361c1320f5cb9ffde024b61b"
 PV = "${LINUX_VERSION}${LINUX_VERSION_EXTENSION}+git${SRCPV}"
 B = "${S}"
 
-COMPATIBLE_MACHINE_zynq = "zynq"
+COMPATIBLE_MACHINE = "zedboard"
 KMACHINE_zynq ?= "zynq"
-
-python __anonymous() {
-    if d.getVar("MACHINE", True) != "zedboard-zynq7-mel":
-        bb.warn("kernel provider 'linux-adi' is ONLY supported for MACHINE=zedboard-zynq7-mel")
-}
