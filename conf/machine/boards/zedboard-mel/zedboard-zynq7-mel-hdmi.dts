@@ -1,12 +1,10 @@
+
 /dts-v1/;
-
-/include/ "zynq-rpmsg.dtsi"
-
 / {
-	compatible = "xlnx,zynq-7000";
-	#address-cells = <0x1>;
-	#size-cells = <0x1>;
+	#address-cells = <1>;
+	#size-cells = <1>;
 	interrupt-parent = <0x1>;
+	compatible = "xlnx,zynq-7000";
 	model = "Xilinx Zynq ZED";
 
 	aliases {
