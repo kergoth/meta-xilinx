@@ -13,9 +13,6 @@
  */
 
 /dts-v1/;
-
-/include/ "zynq-rpmsg.dtsi"
-
 / {
 	#address-cells = <1>;
 	#size-cells = <1>;
