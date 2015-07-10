@@ -8,7 +8,7 @@ SRC_URI_append = " \
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
     file://enable_unionfs.cfg \
-    file://enable_fhandle.cfg \
+    file://systemd.cfg \
     file://enable_kgboc.cfg \
     file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
     file://0001-scsi-fix-our-current-target-reap-infrastructure.patch \
