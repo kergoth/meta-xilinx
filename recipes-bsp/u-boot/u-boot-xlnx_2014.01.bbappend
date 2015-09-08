@@ -1,4 +1,6 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+FILESEXTRAPATHS_prepend_zc702 := "${THISDIR}/files/zc702-zynq7-mel:"
+FILESEXTRAPATHS_prepend_zedboard := "${THISDIR}/files/zedboard-zynq7-mel:"
+
 SRC_URI_append += " \
     file://ps7_init.h \
     file://ps7_init.c \
