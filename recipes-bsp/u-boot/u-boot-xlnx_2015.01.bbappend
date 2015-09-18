@@ -1,10 +1,12 @@
 FILESEXTRAPATHS_prepend_zc702 := "${THISDIR}/files/zc702-zynq7-mel:"
 FILESEXTRAPATHS_prepend_zedboard := "${THISDIR}/files/zedboard-zynq7-mel:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files/common:"
 
 SRC_URI_append += " \
     file://ps7_init.h \
     file://ps7_init.c \
     file://uEnv.txt \
+    file://0001-Add-linux-compiler-gcc5.h-to-fix-builds-with-gcc5.patch \
 "
 
 do_configure_prepend () {
