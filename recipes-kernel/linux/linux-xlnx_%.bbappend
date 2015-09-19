@@ -11,3 +11,10 @@ SRC_URI_append = " \
     file://enable_kgboc.cfg \
     file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
 "
+
+SRC_URI_append_zedboard = " \
+    file://0001-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
+    file://0002-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
+    file://0003-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
+"
+
