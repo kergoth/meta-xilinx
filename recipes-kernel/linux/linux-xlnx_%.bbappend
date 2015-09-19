@@ -11,4 +11,3 @@ SRC_URI_append = " \
     file://enable_kgboc.cfg \
     file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
 "
-
