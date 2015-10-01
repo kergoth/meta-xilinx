@@ -3,7 +3,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(B
 SRC_URI_append = " \
     ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://xilinx_zynq_base_trd.cfg", "", d)} \
     file://lttng.cfg \
-    file://unionfs-2.6_for_3.14.17.patch \    
+    file://unionfs-2.6_for_3.17.0-rc1.patch \    
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
     file://enable_unionfs.cfg \
@@ -13,9 +13,9 @@ SRC_URI_append = " \
 "
 
 SRC_URI_append_zedboard = " \
-    file://0001-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://0002-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://0003-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://enable_adv7511_hdmi.cfg \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0001-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0002-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0003-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://enable_adv7511_hdmi.cfg", "", d)} \
 "
 
