@@ -13,9 +13,9 @@ SRC_URI_append = " \
 "
 
 SRC_URI_append_zedboard = " \
-    file://0001-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://0002-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://0003-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch \
-    file://enable_adv7511_hdmi.cfg \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0001-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0002-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0003-port-ADI-HDMI-support-from-3.17-linux-adi-kernel.patch", "", d)} \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://enable_adv7511_hdmi.cfg", "", d)} \
 "
 
