@@ -223,13 +223,14 @@
 		};
 
 		usb@e0002000 {
-			compatible = "xlnx,ps7-usb-1.00.a", "xlnx,zynq-usb-1.00.a";
+			compatible = "xlnx,zynq-usb-2.20a", "chipidea,usb2";
 			reg = <0xe0002000 0x1000>;
 			interrupts = <0x0 0x15 0x4>;
 			interrupt-parent = <0x1>;
 			clocks = <0x3 0x1c>;
 			dr_mode = "host";
 			phy_type = "ulpi";
+			usb-phy = <&usb_phy0>;
 			xlnx,phy-reset-gpio = <0x5 0x55 0x0>;
 		};
 
@@ -350,6 +351,11 @@
 	chosen {
 		bootargs = "console=tty0 console=ttyPS0,115200 root=/dev/mmcblk0p2 rw earlyprintk rootwait";
 		linux,stdout-path = "/amba@0/uart@E0001000";
+	};
+
+	usb_phy0: phy0 {
+		compatible = "usb-nop-xceiv";
+		#phy-cells = <0>;
 	};
 
 	fpga-axi@0 {
