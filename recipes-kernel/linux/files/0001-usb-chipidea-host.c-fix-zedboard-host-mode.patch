@@ -1,0 +1,48 @@
+From 97958ca4d671e1ef3c2823a08ec62666fe343960 Mon Sep 17 00:00:00 2001
+From: Adnan Ali <adnan_ali@mentor.com>
+Date: Wed, 14 Oct 2015 19:26:36 +0500
+Subject: [PATCH] drivers/usb/chipidea/host.c: fix zedboard host mode
+
+zedboard does not detect any usb devices. The reason is when usb_add_hcd
+is called. It resets the controller. Afterwords any changes made to
+controller are not working.
+
+This hardcodes the controller to host mode when dr_mode is set to "host"
+in the device tree.
+
+Signed-off-by: Adnan Ali <adnan_ali@mentor.com>
+---
+ drivers/usb/chipidea/host.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/drivers/usb/chipidea/host.c b/drivers/usb/chipidea/host.c
+index 48731d0..df5354f 100644
+--- a/drivers/usb/chipidea/host.c
++++ b/drivers/usb/chipidea/host.c
+@@ -77,6 +77,15 @@ static irqreturn_t host_irq(struct ci_hdrc *ci)
+ 	return usb_hcd_irq(ci->irq, ci->hcd);
+ }
+ 
++static void zedboard_usb_host_fix(void)
++{
++	void * addr;
++	addr = ioremap(0xe0002170, 32);
++	iowrite32(0x600a0067, addr);
++	iounmap(addr);
++	return;
++}
++
+ static int host_start(struct ci_hdrc *ci)
+ {
+ 	struct usb_hcd *hcd;
+@@ -117,6 +125,7 @@ static int host_start(struct ci_hdrc *ci)
+ 		priv->reg_vbus = ci->platdata->reg_vbus;
+ 
+ 	ret = usb_add_hcd(hcd, 0, 0);
++	zedboard_usb_host_fix();
+ 	if (ret) {
+ 		goto put_hcd;
+ 	} else {
+-- 
+2.1.0
+

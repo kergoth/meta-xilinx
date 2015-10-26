@@ -29,6 +29,13 @@
 		bootargs = "console=ttyPS0,115200 root=/dev/ram rw earlyprintk ramdisk_size=32768 consoleblank=0";
 		linux,stdout-path = "/amba@0/serial@e0001000";
 	} ;
+
+
+	usb_phy0: phy0 {
+		compatible = "usb-nop-xceiv";
+		#phy-cells = <0>;
+	};
+
 	cpus {
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -395,12 +402,13 @@
 		} ;
 		ps7_usb_0: ps7-usb@e0002000 {
 			clocks = <&clkc 28>;
-			compatible = "xlnx,ps7-usb-1.00.a", "xlnx,zynq-usb-1.00.a";
+			compatible = "xlnx,zynq-usb-2.20a", "chipidea,usb2";
 			dr_mode = "host";
 			interrupt-parent = <&ps7_scugic_0>;
 			interrupts = <0 21 4>;
 			phy_type = "ulpi";
 			reg = <0xe0002000 0x1000>;
+			usb-phy = <&usb_phy0>;
 			usb-reset = <&ps7_gpio_0 7 0>;
 		} ;
 		ps7_wdt_0: ps7-wdt@f8005000 {
