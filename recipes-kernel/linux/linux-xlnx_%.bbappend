@@ -11,6 +11,7 @@ SRC_URI_append = " \
     file://enable_kgboc.cfg \
     file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
     file://enable_nfs_server.cfg \
+    file://lttng_backtrace_fix.cfg \
 "
 
 SRC_URI_append_zedboard = " \
