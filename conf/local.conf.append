@@ -1,13 +1,3 @@
-# Uncomment one of the following depending on the SD card size you
-# want to deploy  the image  to  (default=sdimage-bootpart-4g.wks) 
-# For  4gb or 8gb  sd  cards, uncomment the line with -4gb or -8gb 
-# file  respectively and  for  smaller cards, use the one  without 
-# 4g or 8g appended.
-#
-# NOTE: Only use wks file.
-#
-# WKS_FILE ?= "sdimage-bootpart.wks"
+# Uncomment one of these for specific SD card sizes (default=4g)
 # WKS_FILE ?= "sdimage-bootpart-2g.wks"
-# WKS_FILE ?= "sdimage-bootpart-4g.wks"
 # WKS_FILE ?= "sdimage-bootpart-8g.wks"
-
