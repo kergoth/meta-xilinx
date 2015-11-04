@@ -22,3 +22,6 @@ SRC_URI_append_zedboard = " \
     ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://enable_adv7511_hdmi.cfg", "", d)} \
 "
 
+SRC_URI_append_zc702 = " \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0001-xylon-drm-driver-add-implementation-of-set_busid.patch", "", d)} \
+"
