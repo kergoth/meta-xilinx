@@ -1,0 +1,31 @@
+From a986010c494ef56fc30d2aa04dc98f30c4f1dd6b Mon Sep 17 00:00:00 2001
+From: Yasir-Khan <yasir_khan@mentor.com>
+Date: Wed, 4 Nov 2015 18:12:09 +0500
+Subject: [PATCH] xylon drm driver: add implementation of set_busid()
+
+This resolves the below kernel backtrace.
+----------------------------------------------------------------------
+No drm_driver.set_busid() implementation provided by xylon_drm_driver.
+Use drm_dev_set_unique() to set the unique name explicitly.
+----------------------------------------------------------------------
+
+Signed-off-by: Yasir-Khan <yasir_khan@mentor.com>
+---
+ drivers/gpu/drm/xylon/xylon_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/xylon/xylon_drv.c b/drivers/gpu/drm/xylon/xylon_drv.c
+index 0e6de30..582e96d 100644
+--- a/drivers/gpu/drm/xylon/xylon_drv.c
++++ b/drivers/gpu/drm/xylon/xylon_drv.c
+@@ -240,6 +240,7 @@ static struct drm_driver xylon_drm_driver = {
+ 			   DRIVER_MODESET | DRIVER_GEM | DRIVER_PRIME,
+ 	.load = xylon_drm_load,
+ 	.unload = xylon_drm_unload,
++	.set_busid = drm_platform_set_busid,
+ 	.preclose = xylon_drm_preclose,
+ 	.postclose = xylon_drm_postclose,
+ 	.lastclose = xylon_drm_lastclose,
+-- 
+1.7.9.5
+
