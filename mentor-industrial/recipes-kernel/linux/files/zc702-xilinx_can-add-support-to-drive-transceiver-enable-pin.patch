@@ -1,0 +1,120 @@
+diff -uprN a/Documentation/devicetree/bindings/net/can/xilinx_can.txt b/Documentation/devicetree/bindings/net/can/xilinx_can.txt
+--- a/Documentation/devicetree/bindings/net/can/xilinx_can.txt	2015-10-22 13:51:31.974396924 +0500
++++ b/Documentation/devicetree/bindings/net/can/xilinx_can.txt	2015-10-22 13:54:23.674389564 +0500
+@@ -17,6 +17,9 @@ Required properties:
+ - tx-fifo-depth		: Can Tx fifo depth.
+ - rx-fifo-depth		: Can Rx fifo depth.
+ 
++Optional properties:
++- transceiver-enable    : Provide the GPIO pin that controls the CAN transceiver.
++			  Flags can be 0 [Active High] or 1 [Active Low].
+ 
+ Example:
+ 
+@@ -42,3 +45,16 @@ For Axi CAN Dts file:
+ 			tx-fifo-depth = <0x40>;
+ 			rx-fifo-depth = <0x40>;
+ 		};
++For ZC702 CAN Dts file:
++	ps7_can_0: ps7-can@e0008000 {
++        		clocks = <&clkc 19>, <&clkc 36>;
++        		clock-names = "can_clk", "pclk";
++        		compatible = "xlnx,zynq-can-1.0";
++        		interrupt-parent = <&ps7_scugic_0>;
++        		interrupts = <0 28 4>;
++        		reg = <0xe0008000 0x1000>;
++        		tx-fifo-depth = <0x40>;
++        		rx-fifo-depth = <0x40>;
++        		transceiver-enable = <&ps7_gpio_0 9 1>;
++		} ;
++
+diff -uprN a/drivers/net/can/xilinx_can.c b/drivers/net/can/xilinx_can.c
+--- a/drivers/net/can/xilinx_can.c	2015-10-22 13:51:53.818395987 +0500
++++ b/drivers/net/can/xilinx_can.c	2015-10-22 13:53:58.750390632 +0500
+@@ -25,6 +25,7 @@
+ #include <linux/module.h>
+ #include <linux/netdevice.h>
+ #include <linux/of.h>
++#include <linux/of_gpio.h>
+ #include <linux/platform_device.h>
+ #include <linux/skbuff.h>
+ #include <linux/string.h>
+@@ -143,6 +144,8 @@ struct xcan_priv {
+ 	unsigned long irq_flags;
+ 	struct clk *bus_clk;
+ 	struct clk *can_clk;
++	int transceiver_enable;
++	bool te_active_low;
+ };
+ 
+ /* CAN Bittiming constants as per Xilinx CAN specs */
+@@ -835,6 +838,13 @@ static int xcan_open(struct net_device *
+ 	struct xcan_priv *priv = netdev_priv(ndev);
+ 	int ret;
+ 
++	if (gpio_is_valid(priv->transceiver_enable)) {
++		if (priv->te_active_low)
++			gpio_set_value(priv->transceiver_enable, 0);
++		else
++			gpio_set_value(priv->transceiver_enable, 1);
++	}
++
+ 	ret = request_irq(ndev->irq, xcan_interrupt, priv->irq_flags,
+ 			ndev->name, ndev);
+ 	if (ret < 0) {
+@@ -908,6 +918,13 @@ static int xcan_close(struct net_device
+ 	free_irq(ndev->irq, ndev);
+ 	close_candev(ndev);
+ 
++	if (gpio_is_valid(priv->transceiver_enable)) {
++		if (priv->te_active_low)
++			gpio_set_value(priv->transceiver_enable, 1);
++		else
++			gpio_set_value(priv->transceiver_enable, 0);
++	}
++
+ 	can_led_event(ndev, CAN_LED_EVENT_STOP);
+ 
+ 	return 0;
+@@ -1041,6 +1058,7 @@ static int xcan_probe(struct platform_de
+ 	struct xcan_priv *priv;
+ 	void __iomem *addr;
+ 	int ret, rx_max, tx_max;
++	enum of_gpio_flags flags;
+ 
+ 	/* Get the virtual base address for the device */
+ 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+@@ -1130,6 +1148,23 @@ static int xcan_probe(struct platform_de
+ 
+ 	netif_napi_add(ndev, &priv->napi, xcan_rx_poll, rx_max);
+ 
++	priv->transceiver_enable = of_get_named_gpio_flags(pdev->dev.of_node, "transceiver-enable", 0, &flags);
++	if (gpio_is_valid(priv->transceiver_enable)) {
++		if (gpio_request(priv->transceiver_enable, "transceiver-enable")) {
++			dev_err(&pdev->dev, "transceiver_enable pin [%d] is busy !\n", priv->transceiver_enable);
++			priv->transceiver_enable = -EBUSY;
++			goto err_unprepare_disable_dev;
++		} else {
++			dev_dbg(&pdev->dev, "transceiver_enable pin [%d] is registered.\n", priv->transceiver_enable);
++			priv->te_active_low = flags & OF_GPIO_ACTIVE_LOW;
++			if (priv->te_active_low) {
++				gpio_direction_output(priv->transceiver_enable, 1);
++			} else {
++				gpio_direction_output(priv->transceiver_enable, 0);
++			}
++		}
++	}
++
+ 	ret = register_candev(ndev);
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "fail to register failed (err=%d)\n", ret);
+@@ -1170,6 +1205,9 @@ static int xcan_remove(struct platform_d
+ 	if (set_reset_mode(ndev) < 0)
+ 		netdev_err(ndev, "mode resetting failed!\n");
+ 
++	if (gpio_is_valid(priv->transceiver_enable))
++		gpio_free(priv->transceiver_enable);
++
+ 	unregister_candev(ndev);
+ 	netif_napi_del(&priv->napi);
+ 	free_candev(ndev);

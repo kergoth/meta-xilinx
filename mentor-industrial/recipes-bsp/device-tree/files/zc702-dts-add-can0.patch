@@ -1,0 +1,22 @@
+diff -uprN a/zc702-mel/zc702-zynq7-mel.dts b/zc702-mel/zc702-zynq7-mel.dts
+--- a/zc702-mel/zc702-zynq7-mel.dts	2015-10-22 13:08:34.490507402 +0500
++++ b/zc702-mel/zc702-zynq7-mel.dts	2015-10-22 13:13:01.110495974 +0500
+@@ -84,7 +84,17 @@
+ 			reg = <0xf800b000 0x1000>;
+ 		} ;
+ 
+-		ps7_can_0: ps7-can@e0008000 { compatible = "invalid"; } ;
++		ps7_can_0: ps7-can@e0008000 {
++			clocks = <&clkc 19>, <&clkc 36>;
++			clock-names = "can_clk", "pclk";
++			compatible = "xlnx,zynq-can-1.0";
++			interrupt-parent = <&ps7_scugic_0>;
++			interrupts = <0 28 4>;
++			reg = <0xe0008000 0x1000>;
++			tx-fifo-depth = <0x40>;
++			rx-fifo-depth = <0x40>;
++			transceiver-enable = <&ps7_gpio_0 9 1>;
++		} ;
+ 
+ 		ps7_ddrc_0: ps7-ddrc@f8006000 {
+ 			compatible = "xlnx,zynq-ddrc-1.0";
