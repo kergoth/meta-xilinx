@@ -89,6 +89,7 @@
 			interrupt-parent = <0x3>;
 			tx-fifo-depth = <0x40>;
 			rx-fifo-depth = <0x40>;
+			transceiver-enable = <0x7 9 1>;
 		};
 
 		can@e0009000 {
