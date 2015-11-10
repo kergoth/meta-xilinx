@@ -8,15 +8,15 @@
 
 	chosen {
 		bootargs = "console=ttyPS0,115200 root=/dev/ram rw earlyprintk consoleblank=0 cma=128M";
-		linux,stdout-path = "/amba/serial@e0001000";
-		stdout-path = "/amba/serial@e0001000";
+		linux,stdout-path = "/amba@0/serial@e0001000";
+		stdout-path = "/amba@0/serial@e0001000";
 	};
 
 	aliases {
-		ethernet0 = "/amba/ethernet@e000b000";
-		i2c0 = "/amba/i2c@e0004000";
-		serial0 = "/amba/serial@e0001000";
-		spi0 = "/amba/spi@e000d000";
+		ethernet0 = "/amba@0/ethernet@e000b000";
+		i2c0 = "/amba@0/i2c@e0004000";
+		serial0 = "/amba@0/serial@e0001000";
+		spi0 = "/amba@0/spi@e000d000";
 	};
 
 	memory {
@@ -64,7 +64,7 @@
 		phandle = <0x2>;
 	};
 
-	amba {
+	amba@0 {
 		compatible = "simple-bus";
 		#address-cells = <0x1>;
 		#size-cells = <0x1>;
@@ -89,6 +89,7 @@
 			interrupt-parent = <0x3>;
 			tx-fifo-depth = <0x40>;
 			rx-fifo-depth = <0x40>;
+			transceiver-enable = <0x7 9 1>;
 		};
 
 		can@e0009000 {
