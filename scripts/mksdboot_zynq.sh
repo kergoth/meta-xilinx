@@ -21,6 +21,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+echo "
+Note: This script has been deprecated, please use the sd-card image in the
+deploy folder to prepare sd-card. Refer to the quick start guide for details.
+"
+
 VERSION="1.0"
 
 : ${kernel:="uImage"}
