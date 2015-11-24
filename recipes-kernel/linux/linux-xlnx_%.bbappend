@@ -13,6 +13,7 @@ SRC_URI_append = " \
     file://enable_nfs_server.cfg \
     file://lttng_backtrace_fix.cfg \
     file://enable_debug_info.cfg \
+    file://0001-kernel-module-change-the-optimization-level-of-load_.patch \
 "
 
 SRC_URI_append_zedboard = " \
