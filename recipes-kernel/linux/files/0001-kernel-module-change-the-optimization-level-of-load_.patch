@@ -1,0 +1,30 @@
+From da01ae3aa901b402411e111c288a3547e7b6e1ef Mon Sep 17 00:00:00 2001
+From: Yasir-Khan <yasir_khan@mentor.com>
+Date: Tue, 24 Nov 2015 17:32:29 +0500
+Subject: [PATCH] kernel/module: change the optimization level of load_module
+
+This will provide a stable debug symbol with GCC-5.2.
+
+Based on commit d00d5284f8095a5b0df6bc040719bec058c319ea in meta-mx6
+by Srikanth Krishnakar.
+
+Signed-off-by: Yasir-Khan <yasir_khan@mentor.com>
+---
+ kernel/module.c |    1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/module.c b/kernel/module.c
+index d856e96..3fc4b86 100644
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -3234,6 +3234,7 @@ static int unknown_module_param_cb(char *param, char *val, const char *modname)
+ 
+ /* Allocate and load the module: note that size of section 0 is always
+    zero, and we rely on this for optional sections. */
++__attribute__((optimize(0)))
+ static int load_module(struct load_info *info, const char __user *uargs,
+ 		       int flags)
+ {
+-- 
+1.7.9.5
+
