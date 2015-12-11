@@ -14,6 +14,7 @@ SRC_URI_append = " \
     file://lttng_backtrace_fix.cfg \
     file://enable_debug_info.cfg \
     file://0001-kernel-module-change-the-optimization-level-of-load_.patch \
+    file://0002-kernel-module.c-Remove-optimization-for-complete_for.patch \
 "
 
 SRC_URI_append_zedboard = " \
