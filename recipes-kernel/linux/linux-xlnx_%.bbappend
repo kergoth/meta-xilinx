@@ -15,6 +15,7 @@ SRC_URI_append = " \
     file://enable_debug_info.cfg \
     file://0001-kernel-module-change-the-optimization-level-of-load_.patch \
     file://0002-kernel-module.c-Remove-optimization-for-complete_for.patch \
+    file://0001-linux-xlnx-promote-probe-of-ext4-ahead-of-ext2-ext3.patch \
 "
 
 SRC_URI_append_zedboard = " \
