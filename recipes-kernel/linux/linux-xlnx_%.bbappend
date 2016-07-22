@@ -31,3 +31,5 @@ SRC_URI_append_zedboard = " \
 SRC_URI_append_zc702 = " \
     ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0001-xylon-drm-driver-add-implementation-of-set_busid.patch", "", d)} \
 "
+
+SRCREV_zynqmp = "xilinx-v2016.2"
