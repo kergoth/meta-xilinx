@@ -1,12 +1,9 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
 
 SRC_URI_append = " \
-    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://xilinx_zynq_base_trd.cfg", "", d)} \
     file://lttng.cfg \
-    file://unionfs-2.6_for_3.17.0-rc1.patch \    
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
-    file://enable_unionfs.cfg \
     file://systemd.cfg \
     file://enable_kgboc.cfg \
     file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
@@ -15,7 +12,10 @@ SRC_URI_append = " \
     file://enable_debug_info.cfg \
     file://0001-kernel-module-change-the-optimization-level-of-load_.patch \
     file://0002-kernel-module.c-Remove-optimization-for-complete_for.patch \
-    file://0001-linux-xlnx-promote-probe-of-ext4-ahead-of-ext2-ext3.patch \
+"
+
+SRC_URI_append_zynq = " \
+    ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://xilinx_zynq_base_trd.cfg", "", d)} \
 "
 
 SRC_URI_append_zedboard = " \
@@ -29,3 +29,5 @@ SRC_URI_append_zedboard = " \
 SRC_URI_append_zc702 = " \
     ${@bb.utils.contains("MACHINE_FEATURES", "hdmi", "file://0001-xylon-drm-driver-add-implementation-of-set_busid.patch", "", d)} \
 "
+
+SRCREV_zynqmp = "xilinx-v2016.2"

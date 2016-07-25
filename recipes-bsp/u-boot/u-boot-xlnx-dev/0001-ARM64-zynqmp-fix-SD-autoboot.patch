@@ -1,0 +1,30 @@
+From 9cc224c1a180a96dcafcc26afd3ca082f80d6f01 Mon Sep 17 00:00:00 2001
+From: Alexey Firago <alexey_firago@mentor.com>
+Date: Fri, 22 Jul 2016 13:54:47 +0300
+Subject: [PATCH] ARM64: zynqmp: fix SD autoboot
+
+Fix missing loadbootenv_addr variable which is used in
+SD autoboot process.
+It was lost in "Merge tag 'v2016.05' into master"
+d61a4869f8f1b4debd2fcec3dbae405e096a2b06.
+
+Signed-off-by: Alexey Firago <alexey_firago@mentor.com>
+---
+ include/configs/xilinx_zynqmp.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/configs/xilinx_zynqmp.h b/include/configs/xilinx_zynqmp.h
+index 7d81405..4fa63c2 100644
+--- a/include/configs/xilinx_zynqmp.h
++++ b/include/configs/xilinx_zynqmp.h
+@@ -159,6 +159,7 @@
+ 	"initrd_size=0x2000000\0" \
+ 	"fdt_addr=4000000\0" \
+ 	"fdt_high=0x10000000\0" \
++	"loadbootenv_addr=0x100000\0" \
+ 	"sdbootdev=0\0"\
+ 	"kernel_offset=0x180000\0" \
+ 	"fdt_offset=0x100000\0" \
+-- 
+1.9.1
+
