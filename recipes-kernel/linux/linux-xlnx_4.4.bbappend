@@ -31,3 +31,10 @@ SRC_URI_append_zc702 = " \
 "
 
 SRCREV_zynqmp = "xilinx-v2016.2"
+
+do_deploy_append() {
+    if [ "${MACHINE}" = "zcu102-zynqmp-mel" ]
+    then
+        ln -sf ${KERNEL_IMAGETYPE}-zynqmp-zcu102-revB.dtb ${DEPLOYDIR}/system.dtb
+    fi
+}
