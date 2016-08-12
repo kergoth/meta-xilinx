@@ -1,0 +1,28 @@
+From e7aa139158c2cae6b0ac7d5fbfc559fae88a2b08 Mon Sep 17 00:00:00 2001
+From: Alexey Firago <alexey_firago@mentor.com>
+Date: Thu, 11 Aug 2016 12:33:20 +0300
+Subject: [PATCH] Fix missing includes
+
+Signed-off-by: Alexey Firago <alexey_firago@mentor.com>
+---
+ src/drmmode_display.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/drmmode_display.c b/src/drmmode_display.c
+index 58c1a84..d356343 100644
+--- a/src/drmmode_display.c
++++ b/src/drmmode_display.c
+@@ -51,6 +51,10 @@
+ #include <libudev.h>
+ #include "drmmode_driver.h"
+ 
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <unistd.h>
++
+ struct drmmode_cursor_rec {
+ 	/* hardware cursor: */
+ 	struct armsoc_bo *bo;
+-- 
+1.9.1
+
