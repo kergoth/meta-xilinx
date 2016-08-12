@@ -8,6 +8,8 @@ PACKAGECONFIG[eglfs] = "eglfs"
 
 PACKAGECONFIG_append = " examples accessibility tools libinput linuxfb"
 
+ERROR_QA_remove = "pkgconfig"
+
 QT_CONFIG_FLAGS_append = "${@base_contains('DISTRO_FEATURES', 'x11', \
 	' -accessibility ', '', d)}"
 
