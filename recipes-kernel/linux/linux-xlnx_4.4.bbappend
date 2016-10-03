@@ -2,6 +2,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(B
 
 SRC_URI_append = " \
     file://lttng.cfg \
+    file://enable_tracing.cfg \
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
     file://systemd.cfg \
