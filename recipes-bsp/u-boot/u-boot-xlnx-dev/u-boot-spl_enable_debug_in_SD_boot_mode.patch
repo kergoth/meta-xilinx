@@ -1,0 +1,21 @@
+MIO PIN # 26 is an interrupt pin for PMU. We need to skip configuring it. Found this 
+information at: http://www.xilinx.com/support/answers/65467.html
+
+For more information, see
+http://jira.alm.mentorg.com:8080/browse/CB-6817
+
+Signed-off-by: talha_imran@mentor.com
+
+diff --git a/board/xilinx/zynqmp/xilinx_zynqmp_zcu102/psu_init_gpl.c b/board/xilinx/zynqmp/xilinx_zynqmp_zcu102/psu_init_gpl.c
+index 1385db3..24f3202 100644
+--- a/board/xilinx/zynqmp/xilinx_zynqmp_zcu102/psu_init_gpl.c
++++ b/board/xilinx/zynqmp/xilinx_zynqmp_zcu102/psu_init_gpl.c
+@@ -12857,7 +12857,7 @@ unsigned long psu_mio_init_data() {
+ 			| 0x00000001U << IOU_SLCR_MIO_PIN_26_L2_SEL_SHIFT
+ 			| 0x00000000U << IOU_SLCR_MIO_PIN_26_L3_SEL_SHIFT
+ 			|  0 ) & RegMask); */
+-		PSU_Mask_Write (IOU_SLCR_MIO_PIN_26_OFFSET ,0x000000FEU ,0x00000008U);
++		//PSU_Mask_Write (IOU_SLCR_MIO_PIN_26_OFFSET ,0x000000FEU ,0x00000008U);
+ 	/*############################################################################################################################ */
+ 
+ 		/*Register : MIO_PIN_27 @ 0XFF18006C</p>

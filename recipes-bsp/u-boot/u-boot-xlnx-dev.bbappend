@@ -8,10 +8,11 @@ SPL_BINARY = "boot.bin"
 SRC_URI_append += " \
     file://uEnv.txt \
     file://0001-ARM64-zynqmp-fix-SD-autoboot.patch \
+    file://u-boot-spl_enable_debug_in_SD_boot_mode.patch \
 "
 
 do_compile_append_zynqmp() {
-	cp ${WORKDIR}/git/spl/boot.bin ${WORKDIR}/git/boot.bin
+	cp ${WORKDIR}/build/spl/boot.bin ${WORKDIR}/build/boot.bin
 }
 
 do_deploy_append () {

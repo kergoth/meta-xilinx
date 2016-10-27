@@ -1,7 +1,10 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/files:${@os.path.dirname(bb.utils.which(BBPATH, 'files/lttng.cfg') or '')}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
+
+inherit kernel-config-lttng
 
 SRC_URI_append = " \
-    file://lttng.cfg \
+    file://enable_tracing.cfg \
+    file://enable_bluetooth.cfg \
     file://enable_quota.cfg \
     file://enable_squashfs.cfg \
     file://systemd.cfg \
