@@ -12,7 +12,7 @@ SRC_URI_append += " \
 "
 
 do_compile_append_zynqmp() {
-	cp ${WORKDIR}/git/spl/boot.bin ${WORKDIR}/git/boot.bin
+	cp ${WORKDIR}/build/spl/boot.bin ${WORKDIR}/build/boot.bin
 }
 
 do_deploy_append () {
