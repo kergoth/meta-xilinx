@@ -3,3 +3,8 @@
 # WKS_FILE ?= "sdimage-bootpart-8g.wks"
 
 MACHINE_EXTRA_RRECOMMENDS_append = " ${@' 96boards-tools' if 'mel-support' in '${BBFILE_COLLECTIONS}'.split() else ''}"
+
+# Uncomment these lines to get xilinx proprietary boot.bin containing FPGA support for graphics 
+# and USB peripherals
+# ACCEPT_XILINX_EULA = "1"
+# USE_XILINX_TRD_BOOTLOADER = "1"
