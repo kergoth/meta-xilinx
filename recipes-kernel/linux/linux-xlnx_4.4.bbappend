@@ -17,6 +17,7 @@ SRC_URI_append = " \
     file://0002-kernel-module.c-Remove-optimization-for-complete_for.patch \
     file://arm64_errata_add-mpc-relative-literal-loads-to-build-flags.patch \
     file://enable_audio.cfg \
+    file://enable_posix_mqueue.cfg \
 "
 
 SRC_URI_append_zynq = " \
