@@ -15,6 +15,8 @@ SRC_URI_append = " \
     file://enable_debug_info.cfg \
     file://0001-kernel-module-change-the-optimization-level-of-load_.patch \
     file://0002-kernel-module.c-Remove-optimization-for-complete_for.patch \
+    file://arm64_errata_add-mpc-relative-literal-loads-to-build-flags.patch \
+    file://enable_audio.cfg \
 "
 
 SRC_URI_append_zynq = " \
