@@ -18,6 +18,7 @@ SRC_URI_append = " \
     file://arm64_errata_add-mpc-relative-literal-loads-to-build-flags.patch \
     file://enable_audio.cfg \
     file://enable_posix_mqueue.cfg \
+    file://fix_build_warning.cfg \
 "
 
 SRC_URI_append_zynq = " \
