@@ -20,6 +20,7 @@ SRC_URI_append = " \
     file://enable_posix_mqueue.cfg \
     file://fix_build_warning.cfg \
     file://0001-net-macb-release-spinlock-before-calling-ptp_clock_u.patch \
+    file://enable_xilinx_phy.cfg \
 "
 
 SRC_URI_append_zynq = " \
