@@ -22,6 +22,7 @@ SRC_URI_append = " \
     file://0001-net-macb-release-spinlock-before-calling-ptp_clock_u.patch \
     file://enable_xilinx_phy.cfg \
     file://enable_autofs.cfg \
+    file://enable_wlan.cfg \
 "
 
 SRC_URI_append_zynq = " \
