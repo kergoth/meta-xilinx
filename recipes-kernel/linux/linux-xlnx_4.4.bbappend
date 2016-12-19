@@ -23,6 +23,7 @@ SRC_URI_append = " \
     file://enable_xilinx_phy.cfg \
     file://enable_autofs.cfg \
     file://enable_wlan.cfg \
+    file://0001-From-19be0eaffa3ac7d8eb6784ad9bdbc7d67ed8e619-Mon-Se.patch \
 "
 
 SRC_URI_append_zynq = " \
