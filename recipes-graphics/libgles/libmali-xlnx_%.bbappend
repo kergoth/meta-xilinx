@@ -2,6 +2,8 @@ FILES_SOLIBSDEV = ""
 FILES_${PN} = "${libdir}/*.so*"
 INSANE_SKIP_${PN} = "dev-so"
 
+RDEPENDS_${PN}_remove = "mali-modules"
+
 do_install() {
     # install headers
     install -d -m 0655 ${D}${includedir}/EGL
