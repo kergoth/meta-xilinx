@@ -9,6 +9,7 @@ SRC_URI_append += " \
     file://uEnv.txt \
     file://0001-ARM64-zynqmp-fix-SD-autoboot.patch \
     file://u-boot-spl_enable_debug_in_SD_boot_mode.patch \
+    file://0001-xilinx_zynqmp_zcu102.h-allow-storing-u-boot-env-in-m.patch \
 "
 
 do_compile_append_zynqmp() {
