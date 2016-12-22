@@ -1,0 +1,54 @@
+From e4b17086204b793b0aaba4e2c312cc1b156f8237 Mon Sep 17 00:00:00 2001
+From: Yasir-Khan <yasir_khan@mentor.com>
+Date: Thu, 22 Dec 2016 22:34:41 +0500
+Subject: [PATCH] net/eth-uclass: correctly handle invalid pdata->enetaddr
+
+Here's the pseudocode of what's happening in eth_post_probe
+
+READ MAC address from ROM into rom_mac variable
+READ MAC address from ethaddr env variable into env_mac variable
+IF env_mac is not zero
+        SET MAC address to env_mac value
+ELSE IF rom_mac is valid
+        SET MAC address to rom_mac value
+ELSE IF rom_mac is zero
+        SET MAC address to a random value
+
+In case when env_mac is zero as ethaddr is not defined by default
+and rom_mac is ff:ff:ff:ff:ff:ff (non-zero), which is invalid, the control
+goes to last if statement which evaluates to false as value is non-zero
+(although it is invalid). Thus an invalid MAC address skips this check and
+a random MAC address is not generated and further code tries to write the
+invalid ff:ff:ff:ff:ff:ff MAC address which fails.
+
+If we remove the last "if rom_mac is zero "check from else statement, it
+stops the invalid ROM MAC address to proceed further.
+
+This resolves the below ethernet failure in u-boot startup
+------------------------------------------------------------------
+Net:   ZYNQ GEM: ff0e0000, phyaddr 12, interface rgmii-id
+eth0: ethernet@ff0e0000
+Error: ethernet@ff0e0000 address ff:ff:ff:ff:ff:ff illegal value
+------------------------------------------------------------------
+
+Signed-off-by: Yasir-Khan <yasir_khan@mentor.com>
+---
+ net/eth-uclass.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/eth-uclass.c b/net/eth-uclass.c
+index c15cc4d..124b26f 100644
+--- a/net/eth-uclass.c
++++ b/net/eth-uclass.c
+@@ -511,7 +511,7 @@ static int eth_post_probe(struct udevice *dev)
+ 		eth_setenv_enetaddr_by_index("eth", dev->seq, pdata->enetaddr);
+ 		printf("\nWarning: %s using MAC address from ROM\n",
+ 		       dev->name);
+-	} else if (is_zero_ethaddr(pdata->enetaddr)) {
++	} else {
+ #ifdef CONFIG_NET_RANDOM_ETHADDR
+ 		net_random_ethaddr(pdata->enetaddr);
+ 		printf("\nWarning: %s (eth%d) using random MAC address - %pM\n",
+-- 
+2.8.1
+
