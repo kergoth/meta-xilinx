@@ -1,0 +1,30 @@
+From 187a6377960916ba92f8840dd7199957873476f6 Mon Sep 17 00:00:00 2001
+From: Fahad Arslan <Fahad_Arslan@mentor.com>
+Date: Tue, 27 Dec 2016 19:55:23 +0500
+Subject: [PATCH 1/1] ARM64: zynqmp: Wire up PSCI reset
+
+Using PSCI to reset the system.
+
+Signed-off-by: Michal Simek <michal.simek@xilinx.com>
+
+Signed-off-by: Fahad Arslan <Fahad_Arslan@mentor.com>
+---
+ board/xilinx/zynqmp/zynqmp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/board/xilinx/zynqmp/zynqmp.c b/board/xilinx/zynqmp/zynqmp.c
+index 9e82589..a6fea66 100644
+--- a/board/xilinx/zynqmp/zynqmp.c
++++ b/board/xilinx/zynqmp/zynqmp.c
+@@ -429,3 +429,8 @@ int board_usb_cleanup(int index, enum usb_init_type init)
+ 	return 0;
+ }
+ #endif
++
++void reset_misc(void)
++{
++	psci_system_reset(true);
++}
+-- 
+2.8.1
+
