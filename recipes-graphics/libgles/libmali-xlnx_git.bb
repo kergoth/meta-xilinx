@@ -27,7 +27,7 @@ S = "${WORKDIR}/${PV}"
 X11RDEPENDS = "libxdamage libxext libx11 libdrm libxau libxcb libxdmcp libxfixes"
 RDEPENDS_${PN} = " \
     mali-modules \
-    ${@base_contains('DISTRO_FEATURES', 'x11', '${X11RDEPENDS}', '', d)}    \
+    ${@bb.utils.contains('DISTRO_FEATURES', 'x11', '${X11RDEPENDS}', '', d)}    \
     "
 
 EGL_TYPE = "${@bb.utils.contains('DISTRO_FEATURES', 'x11', 'x11',  \
