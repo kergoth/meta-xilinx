@@ -28,3 +28,7 @@ do_install() {
     rm -rf ${D}${libdir}/libMali_prof.so
     cp -r ${S}/${EGL_TYPE}/usr/lib/libMali_prof.so ${D}${libdir}/libMali_prof.so.1
 }
+
+# WARNING: libmali-xlnx-r5p1-01rel0-r0 do_package_qa: QA Issue: ELF binary 'libmali-xlnx/r5p1-01rel0-r0/packages-split/libmali-xlnx/usr/lib64/libMali_prof.so.1' has relocations in .text
+# ELF binary 'libmali-xlnx/r5p1-01rel0-r0/packages-split/libmali-xlnx/usr/lib64/libMali.so.1' has relocations in .text [textrel]
+INSANE_SKIP_${PN} += "textrel"
