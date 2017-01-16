@@ -1,6 +1,6 @@
 DESCRIPTION = "A proprietary boot.bin from xilinx TRD containing FPGA support for display and USB peripherals"
 SECTION = "bsp"
-LICENSE = "LICENSE.xilinx"
+LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://${WORKDIR}/LICENSE.xilinx;md5=cc7d2eefc042eec125f967de1d4ec39d"
 
 XILINX_EULA_FILE = "${THISDIR}/files/LICENSE.xilinx"
