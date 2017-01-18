@@ -26,6 +26,7 @@ SRC_URI_append = " \
     file://dirty-cow-fix-cve-2016-5195.patch \
     file://enable_schedstats.cfg \
     file://0001-serial-xuartps-Enable-loopback-mode.patch \
+    file://0001-arm64-KGDB-64-bit-pstate-32-bit-pstate.patch \
 "
 
 SRC_URI_append_zynq = " \
