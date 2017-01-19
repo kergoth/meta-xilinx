@@ -42,6 +42,10 @@ if [ -e "/dev/fb" ]; then
     fi
 fi
 
+if [ -z "$HAVE_BATTERY" ]; then
+    HAVE_BATTERY=0
+fi
+
 # 
 # No way to guess these or have any defaults
 #
