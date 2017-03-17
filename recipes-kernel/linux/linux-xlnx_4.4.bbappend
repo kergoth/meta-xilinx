@@ -55,6 +55,10 @@ SRCREV_zynqmp = "xilinx-v2016.2"
 do_deploy_append() {
     if [ "${MACHINE}" = "zcu102-zynqmp-mel" ]
     then
-        ln -sf ${KERNEL_IMAGETYPE}-zynqmp-zcu102-revB.dtb ${DEPLOYDIR}/system.dtb
+        if [ "x${MEL_SGT_DEVICETREE}" != "x" ]; then
+            ln -sf mel-sgt.dtb ${DEPLOY_DIR_IMAGE}/system.dtb
+        else
+            ln -sf ${KERNEL_IMAGETYPE}-zynqmp-zcu102-revB.dtb ${DEPLOYDIR}/system.dtb
+        fi
     fi
 }
