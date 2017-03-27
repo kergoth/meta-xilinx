@@ -46,10 +46,7 @@ do_install_append() {
 
 do_deploy() {
 	if [ "${USE_XILINX_TRD_BOOTLOADER}" == "1" ]; then
-		# remove existing boot.bin file and its symlinks from deployed image
-		rm -f ${DEPLOY_DIR_IMAGE}/boot.bin*
-
-		cp ${WORKDIR}/boot.bin ${DEPLOYDIR}
+		cp ${WORKDIR}/boot.bin ${DEPLOYDIR}/xilinx-bootloader-trd.bin
 	else
 		bbnote "FPGA support for Display and USB peripherals not enabled."
 		bbnote "Set USE_XILINX_TRD_BOOTLOADER to enable it" 
@@ -57,8 +54,5 @@ do_deploy() {
 }
 
 addtask deploy after do_unpack
-
-# boot.bin must be deployed before we can overwrite it
-do_deploy[depends] = "virtual/bootloader:do_deploy"
 
 FILES_${PN} = "boot/boot.bin"
