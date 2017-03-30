@@ -45,7 +45,7 @@ do_install_append() {
 }
 
 do_deploy() {
-	if [ "${USE_XILINX_TRD_BOOTLOADER}" == "1" ]; then
+	if [ "${USE_XILINX_TRD_BOOTLOADER}" = "1" ]; then
 		cp ${WORKDIR}/boot.bin ${DEPLOYDIR}/xilinx-bootloader-trd.bin
 	else
 		bbnote "FPGA support for Display and USB peripherals not enabled."
