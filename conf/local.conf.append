@@ -8,3 +8,6 @@ MACHINE_EXTRA_RRECOMMENDS_append = " ${@' 96boards-tools' if 'mel-support' in '$
 # and USB peripherals
 # ACCEPT_XILINX_EULA = "1"
 # USE_XILINX_TRD_BOOTLOADER = "1"
+
+# Remove perf as it depends on non-gplv3 binutils which is broken on AARCH64 platform
+RRECOMMENDS_packagegroup-core-tools-profile_remove_aarch64 = "${@incompatible_license_contains('GPL-3.0', 'perf', '', d)}"
