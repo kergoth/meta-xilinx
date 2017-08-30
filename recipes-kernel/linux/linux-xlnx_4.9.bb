@@ -6,4 +6,5 @@ require recipes-kernel/linux/linux-xlnx.inc
 
 SRC_URI_append = " \
     file://enable_tracing.cfg \
+    file://enable_nfs_server.cfg \
 "
