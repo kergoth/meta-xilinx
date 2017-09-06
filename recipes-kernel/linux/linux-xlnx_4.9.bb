@@ -8,4 +8,5 @@ SRC_URI_append = " \
     file://enable_tracing.cfg \
     file://enable_nfs_server.cfg \
     file://enable_usb_ulpi.cfg \
+    file://enable_autofs.cfg \
 "
