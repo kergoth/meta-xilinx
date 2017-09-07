@@ -13,4 +13,5 @@ SRC_URI_append = " \
     file://enable_quota.cfg \
     file://enable_wlan.cfg \
     file://enable_wlan_generic_devices.cfg \
+    file://enable_bluetooth.cfg \
 "
