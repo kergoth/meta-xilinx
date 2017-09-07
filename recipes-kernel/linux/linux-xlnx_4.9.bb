@@ -11,4 +11,6 @@ SRC_URI_append = " \
     file://enable_autofs.cfg \
     file://enable_squashfs.cfg \
     file://enable_quota.cfg \
+    file://enable_wlan.cfg \
+    file://enable_wlan_generic_devices.cfg \
 "
