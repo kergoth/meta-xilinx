@@ -14,4 +14,8 @@ SRC_URI_append = " \
     file://enable_wlan.cfg \
     file://enable_wlan_generic_devices.cfg \
     file://enable_bluetooth.cfg \
+    file://enable_kgboc.cfg \
+    file://enable_kgboc_kdb_disable.cfg \
+    file://enable_debug_info.cfg \
+    file://0001-Makefile-Link-kgdoc-after-the-UART-driver.patch \
 "
