@@ -1,0 +1,2 @@
+# Uncomment this line to switch to the preempt-rt kernel
+#PREFERRED_PROVIDER_virtual/kernel_zcu102-zynqmp-mel = "linux-xlnx-rt"
