@@ -1,5 +1,2 @@
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-
-SRC_URI_append = " \
-                  file://0001-mali_linux_trace-fix-typo-in-stringify-macro.patch \
-"
+SRC_URI += "file://0001-mali-r5p1-01rel0-Remove-unused-trace-macros.patch"
